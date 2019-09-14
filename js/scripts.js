@@ -34,33 +34,71 @@ function download(filename, content) {
     var blob = new Blob([byteArray], {type: 'audio/x-wav'});
     window.navigator.msSaveOrOpenBlob(blob, filename);
   } else {
-      var element = document.createElement('a');
-      element.setAttribute('href', 'data:audio/x-wav;base64,' + encode64(content));
-      element.setAttribute('download', filename);
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:audio/x-wav;base64,' + encode64(content));
+    element.setAttribute('download', filename);
 
-      element.style.display = 'none';
-      document.body.appendChild(element);
+    element.style.display = 'none';
+    document.body.appendChild(element);
 
-      element.click();
+    element.click();
 
-      document.body.removeChild(element);
+    document.body.removeChild(element);
   }
 }
 
 function convertToWAV(text, options) {
   speak(text, options, function(data, wav) {
-    console.log('Pronto');
     download('speak.wav', wav);
   });
 }
 
+function loadTextContentFile() {
+  var fileInput = document.getElementById('file');
+  var reader = new FileReader();
+
+  reader.onload = function(e) {
+    var form = document.getElementById('form');
+    var text = e.target.result;
+    var amplitude = form.amplitude.value;
+    var workdgap = form.workdgap.value;
+    var pitch = form.pitch.value;
+    var speed = form.speed.value;
+    var voice = form.voice.value;
+    convertToWAV(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
+  };
+
+  reader.readAsText(fileInput.files[0]);
+}
+
+function changeInput() {
+  var form = document.getElementById('form');
+  var inputType = form.input.value;
+  var isText = inputType == 'text';
+  var isFile = inputType == 'file';
+  
+  document.getElementById('label-text').hidden = !isText;
+  form.text.required = isText;
+  form.text.hidden = !isText;
+  document.getElementById('label-file').hidden = !isFile;
+  form.file.required = isFile;
+  form.file.hidden = !isFile;
+}
+
 function downloadWAV() {
   var form = document.getElementById('form');
-  var text = document.getElementById('text');
-  var amplitude = document.getElementById('amplitude');
-  var workdgap = document.getElementById('workdgap');
-  var pitch = document.getElementById('pitch');
-  var speed = document.getElementById('speed');
-  var voice = document.getElementById('voice');
-  convertToWAV(text.value, { amplitude: amplitude.value, wordgap: workdgap.value, pitch: pitch.value, speed: speed.value, voice: voice.value });
+  var inputType = form.input.value;
+  var text = form.text.value;
+  var amplitude = form.amplitude.value;
+  var workdgap = form.workdgap.value;
+  var pitch = form.pitch.value;
+  var speed = form.speed.value;
+  var voice = form.voice.value;
+  if (inputType == 'text') {
+    convertToWAV(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
+  } else {
+    loadTextContentFile();
+  }
 }
+
+changeInput();
