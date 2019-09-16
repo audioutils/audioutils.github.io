@@ -23,6 +23,7 @@ function encode64(data) {
   
   return ret;
 }
+
 function download(filename, content) {
   if (window.atob && window.navigator && window.navigator.msSaveOrOpenBlob && window.Uint8Array && window.Blob) {
     var byteCharacters = atob(content);
@@ -88,16 +89,72 @@ function changeInput() {
 function downloadWAV() {
   var form = document.getElementById('form');
   var inputType = form.input.value;
-  var text = form.text.value;
-  var amplitude = form.amplitude.value;
-  var workdgap = form.workdgap.value;
-  var pitch = form.pitch.value;
-  var speed = form.speed.value;
-  var voice = form.voice.value;
   if (inputType == 'text') {
+    var text = form.text.value;
+    var amplitude = form.amplitude.value;
+    var workdgap = form.workdgap.value;
+    var pitch = form.pitch.value;
+    var speed = form.speed.value;
+    var voice = form.voice.value;
     convertToWAV(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
   } else {
     loadTextContentFile();
+  }
+}
+
+function playBinaryWAV(content) {
+  var divAudio = document.getElementById('audio');
+  while (divAudio.hasChildNodes()) {
+    divAudio.firstChild.remove();
+  }
+
+  var audioElement = document.createElement('audio');
+  audioElement.setAttribute('controls', '');
+  var sourceElement = document.createElement('source');
+  sourceElement.setAttribute('type', 'audio/wav');
+  sourceElement.setAttribute('src', 'data:audio/x-wav;base64,' + encode64(content));
+  audioElement.appendChild(sourceElement);
+  divAudio.appendChild(audioElement);
+  audioElement.play();
+}
+
+function playAudioHTML5(text, options) {
+  speak(text, options, function(data, wav) {
+    playBinaryWAV(wav);
+  });
+}
+
+function loadTextContentFileToPlay() {
+  var fileInput = document.getElementById('file');
+  var reader = new FileReader();
+
+  reader.onload = function(e) {
+    var form = document.getElementById('form');
+    var text = e.target.result;
+    var amplitude = form.amplitude.value;
+    var workdgap = form.workdgap.value;
+    var pitch = form.pitch.value;
+    var speed = form.speed.value;
+    var voice = form.voice.value;
+    playAudioHTML5(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
+  };
+
+  reader.readAsText(fileInput.files[0]);
+}
+
+function playAudio() {
+  var form = document.getElementById('form');
+  var inputType = form.input.value;
+  if (inputType == 'text') {
+    var text = form.text.value;
+    var amplitude = form.amplitude.value;
+    var workdgap = form.workdgap.value;
+    var pitch = form.pitch.value;
+    var speed = form.speed.value;
+    var voice = form.voice.value;
+    playAudioHTML5(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
+  } else {
+    loadTextContentFileToPlay();
   }
 }
 
