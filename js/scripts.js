@@ -54,19 +54,23 @@ function convertToWAV(text, options) {
   });
 }
 
+function generateAudio(text, callback) {
+  var form = document.getElementById('form');
+  var amplitude = form.amplitude.value;
+  var workdgap = form.workdgap.value;
+  var pitch = form.pitch.value;
+  var speed = form.speed.value;
+  var voice = form.voice.value;
+  callback(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
+}
+
 function loadTextContentFile() {
   var fileInput = document.getElementById('file');
   var reader = new FileReader();
 
   reader.onload = function(e) {
-    var form = document.getElementById('form');
     var text = e.target.result;
-    var amplitude = form.amplitude.value;
-    var workdgap = form.workdgap.value;
-    var pitch = form.pitch.value;
-    var speed = form.speed.value;
-    var voice = form.voice.value;
-    convertToWAV(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
+    generateAudio(text, convertToWAV);
   };
 
   reader.readAsText(fileInput.files[0]);
@@ -91,12 +95,7 @@ function downloadWAV() {
   var inputType = form.input.value;
   if (inputType == 'text') {
     var text = form.text.value;
-    var amplitude = form.amplitude.value;
-    var workdgap = form.workdgap.value;
-    var pitch = form.pitch.value;
-    var speed = form.speed.value;
-    var voice = form.voice.value;
-    convertToWAV(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
+    generateAudio(text, convertToWAV);
   } else {
     loadTextContentFile();
   }
@@ -129,14 +128,8 @@ function loadTextContentFileToPlay() {
   var reader = new FileReader();
 
   reader.onload = function(e) {
-    var form = document.getElementById('form');
     var text = e.target.result;
-    var amplitude = form.amplitude.value;
-    var workdgap = form.workdgap.value;
-    var pitch = form.pitch.value;
-    var speed = form.speed.value;
-    var voice = form.voice.value;
-    playAudioHTML5(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
+    generateAudio(text, playAudioHTML5);
   };
 
   reader.readAsText(fileInput.files[0]);
@@ -147,12 +140,7 @@ function playAudio() {
   var inputType = form.input.value;
   if (inputType == 'text') {
     var text = form.text.value;
-    var amplitude = form.amplitude.value;
-    var workdgap = form.workdgap.value;
-    var pitch = form.pitch.value;
-    var speed = form.speed.value;
-    var voice = form.voice.value;
-    playAudioHTML5(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
+    generateAudio(text, playAudioHTML5);
   } else {
     loadTextContentFileToPlay();
   }
