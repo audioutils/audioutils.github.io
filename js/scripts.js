@@ -54,53 +54,6 @@ function convertToWAV(text, options) {
   });
 }
 
-function generateAudio(text, callback) {
-  var form = document.getElementById('form');
-  var amplitude = form.amplitude.value;
-  var workdgap = form.workdgap.value;
-  var pitch = form.pitch.value;
-  var speed = form.speed.value;
-  var voice = form.voice.value;
-  callback(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
-}
-
-function loadTextContentFile() {
-  var fileInput = document.getElementById('file');
-  var reader = new FileReader();
-
-  reader.onload = function(e) {
-    var text = e.target.result;
-    generateAudio(text, convertToWAV);
-  };
-
-  reader.readAsText(fileInput.files[0]);
-}
-
-function changeInput() {
-  var form = document.getElementById('form');
-  var inputType = form.input.value;
-  var isText = inputType == 'text';
-  var isFile = inputType == 'file';
-  
-  document.getElementById('label-text').hidden = !isText;
-  form.text.required = isText;
-  form.text.hidden = !isText;
-  document.getElementById('label-file').hidden = !isFile;
-  form.file.required = isFile;
-  form.file.hidden = !isFile;
-}
-
-function downloadWAV() {
-  var form = document.getElementById('form');
-  var inputType = form.input.value;
-  if (inputType == 'text') {
-    var text = form.text.value;
-    generateAudio(text, convertToWAV);
-  } else {
-    loadTextContentFile();
-  }
-}
-
 function playBinaryWAV(content) {
   var divAudio = document.getElementById('audio');
   while (divAudio.hasChildNodes()) {
@@ -123,27 +76,60 @@ function playAudioHTML5(text, options) {
   });
 }
 
-function loadTextContentFileToPlay() {
+function generateAudio(text, callback) {
+  var form = document.getElementById('form');
+  var amplitude = form.amplitude.value;
+  var workdgap = form.workdgap.value;
+  var pitch = form.pitch.value;
+  var speed = form.speed.value;
+  var voice = form.voice.value;
+  callback(text, { amplitude: amplitude, wordgap: workdgap, pitch: pitch, speed: speed, voice: voice });
+}
+
+function loadTextContentFile(callback) {
   var fileInput = document.getElementById('file');
   var reader = new FileReader();
 
   reader.onload = function(e) {
     var text = e.target.result;
-    generateAudio(text, playAudioHTML5);
+    generateAudio(text, callback);
   };
 
   reader.readAsText(fileInput.files[0]);
 }
 
-function playAudio() {
+function generateAudioByInput(callback) {
   var form = document.getElementById('form');
   var inputType = form.input.value;
   if (inputType == 'text') {
     var text = form.text.value;
-    generateAudio(text, playAudioHTML5);
+    generateAudio(text, callback);
   } else {
-    loadTextContentFileToPlay();
+    loadTextContentFile(callback);
   }
+}
+
+function changeInput() {
+  var form = document.getElementById('form');
+  var inputType = form.input.value;
+  var isText = inputType == 'text';
+  var isFile = inputType == 'file';
+  
+  document.getElementById('label-text').hidden = !isText;
+  form.text.required = isText;
+  form.text.hidden = !isText;
+
+  document.getElementById('label-file').hidden = !isFile;
+  form.file.required = isFile;
+  form.file.hidden = !isFile;
+}
+
+function downloadWAV() {
+  generateAudioByInput(convertToWAV);
+}
+
+function playAudio() {
+  generateAudioByInput(playAudioHTML5);
 }
 
 changeInput();
