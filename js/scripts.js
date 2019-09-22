@@ -115,13 +115,11 @@ function changeInput() {
   var isText = inputType == 'text';
   var isFile = inputType == 'file';
   
-  document.getElementById('label-text').hidden = !isText;
+  document.getElementById('field-text').hidden = !isText;
   form.text.required = isText;
-  form.text.hidden = !isText;
 
-  document.getElementById('label-file').hidden = !isFile;
+  document.getElementById('field-file').hidden = !isFile;
   form.file.required = isFile;
-  form.file.hidden = !isFile;
 }
 
 function downloadWAV() {

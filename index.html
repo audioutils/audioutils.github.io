@@ -23,7 +23,7 @@
               <div class="field is-narrow">
                 <div class="control">
                   <label class="radio">
-                    <input type="radio" name="input" value="text" checked checkedonchange="changeInput()">
+                    <input type="radio" name="input" value="text" checked onchange="changeInput()">
                     Text
                   </label>
                   <label class="radio">
@@ -34,13 +34,13 @@
               </div>
             </div>
           </div>
-          <div class="field">
-            <label for="file" id="label-file" class="label">File</label>
+          <div class="field" id="field-file">
+            <label for="file" class="label">File</label>
             <div class="control">
               <input type="file" name="file" id="file" accept=".txt">
             </div>
           </div>
-          <div class="field">
+          <div class="field" id="field-text">
             <label for="text" id="label-text" class="label">Text</label>
             <div class="control">
               <textarea id="text" name="text" class="textarea" placeholder="Never gonna give, you, up."></textarea>
