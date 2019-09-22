@@ -8,7 +8,7 @@
   <meta name="description" content="Convert text to audio files">
   <meta name="author" content="Aldo Puga">
 
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <link rel="stylesheet" href="css/bulma.min.css">
 
 </head>
 
@@ -17,78 +17,124 @@
   <div>
     <h2>Text to audio</h2>
     <form id="form">
-      <fieldset>
-        <legend>Input</legend>
-        <label><input type="radio" name="input" value="text" onchange="changeInput()"> Text</label>
-        <label><input type="radio" name="input" value="file" onchange="changeInput()"> File</label>
-      </fieldset>
-      <label for="file" id="label-file">File:</label><br>
-      <input type="file" name="file" id="file" accept=".txt"><br>
-      <label for="text" id="label-text">Text:</label><br>
-      <textarea id="text" name="text" placeholder="Never gonna give, you, up."></textarea><br>
-      <label for="amplitude">Amplitude:</label><br>
-      <input type="text" id="amplitude" name="amplitude" size=5 value="100" required><br>
-      <label for="pitch">Pitch:</label><br>
-      <input type="text" id="pitch" name="pitch" size=5 value="50" required><br>
-      <label for="speed">Speed:</label><br>
-      <input type="text" id="speed" name="speed" size=5 value="175" required><br>
-      <label for="workdgap">Word gap:</label><br>
-      <input type="text" id="workdgap" name="workdgap" size=5 value="0" required><br>
-      <label for="voice">Voice:</label><br>
-      <select id="voice" name="voice" required>
-        <option value="af">Afrikaans</option>
-        <option value="ca">català</option>
-        <option value="cs">čeština</option>
-        <option value="cy">Cymraeg</option>
-        <option value="da">dansk</option>
-        <option value="de">Deutsch</option>
-        <option value="el">ελληνικά</option>
-        <option value="en/en">English (England)</option>
-        <option value="en/en-n">English (Northern)</option>
-        <option value="en/en-rp">English (Received Pronunciation)</option>
-        <option value="en/en-sc">English (Scottish accent)</option>
-        <option value="en/en-us" selected>English (United States)</option>
-        <option value="en/en-wi">English (West Indies)</option>
-        <option value="en/en-wm">English (West Midlands)</option>
-        <option value="eo">Esperanto</option>
-        <option value="es">Español</option>
-        <option value="es-la">Español (América Latina)</option>
-        <option value="fi">suomi</option>
-        <option value="fr">Française (France)</option>
-        <option value="fr-be">Française (Belgique)</option>
-        <option value="hi">हिन्दी</option>
-        <option value="hu">magyar</option>
-        <option value="hy">Հայերեն</option>
-        <option value="hy-west">հայկական արևմուտք</option>
-        <option value="id">Bahasa Indonesia</option>
-        <option value="is">Íslenska</option>
-        <option value="it">Italiano</option>
-        <option value="ka">ქართული</option>
-        <option value="kn">ಕನ್ನಡ</option>
-        <option value="ku">کوردی</option>
-        <option value="la">latine</option>
-        <option value="lv">latviešu valoda</option>
-        <option value="mk">македонски јазик</option>
-        <option value="ml">മലയാളം</option>
-        <option value="nl">Nederlands</option>
-        <option value="no">Norsk</option>
-        <option value="pl">język polski</option>
-        <option value="pt">Português (Brasil)</option>
-        <option value="pt-pt">Português (Portugal)</option>
-        <option value="ro">Română</option>
-        <option value="ru">русский</option>
-        <option value="sk">Slovenčina</option>
-        <option value="sq">Shqip</option>
-        <option value="sv">Svenska</option>
-        <option value="sw">Kiswahili</option>
-        <option value="ta">தமிழ்</option>
-        <option value="tr">Türkçe</option>
-        <option value="vi">Tiếng Việt</option>
-        <option value="zh">漢語</option>
-        <option value="zh-yue">岳华</option>
-      </select><br>
-      <button type="button" onclick="playAudio();">Play audio</button>
-      <button type="button" onclick="downloadWAV();">Download WAV</button>
+      <div class="field">
+        <div class="field-label has-text-left">
+          <label class="label">Input</label>
+        </div>
+        <div class="field-body">
+          <div class="field is-narrow">
+            <div class="control">
+              <label class="radio">
+                <input type="radio" name="input" value="text" onchange="changeInput()">
+                Text
+              </label>
+              <label class="radio">
+                <input type="radio" name="input" value="file" onchange="changeInput()">
+                File
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label for="file" id="label-file" class="label">File</label>
+        <div class="control">
+          <input type="file" name="file" id="file" accept=".txt">
+        </div>
+      </div>
+      <div class="field">
+        <label for="text" id="label-text" class="label">Text</label>
+        <div class="control">
+          <textarea id="text" name="text" class="textarea" placeholder="Never gonna give, you, up."></textarea>
+        </div>
+      </div>
+      <div class="field">
+        <label for="amplitude" class="label">Amplitude:</label>
+        <div class="control">
+          <input type="number" id="amplitude" name="amplitude" class="input" size=5 value="100" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="pitch" class="label">Pitch:</label>
+        <div class="control">
+          <input type="number" id="pitch" name="pitch" class="input" size=5 value="50" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="speed" class="label">Speed:</label>
+        <div class="control">
+          <input type="number" id="speed" name="speed" class="input" size=5 value="175" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="workdgap" class="label">Word gap:</label>
+        <div class="control">
+          <input type="number" id="workdgap" name="workdgap" class="input" size=5 value="0" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="voice" class="label">Voice:</label>
+        <div class="control">
+          <div class="select">
+            <select id="voice" name="voice" required>
+              <option value="af">Afrikaans</option>
+              <option value="ca">català</option>
+              <option value="cs">čeština</option>
+              <option value="cy">Cymraeg</option>
+              <option value="da">dansk</option>
+              <option value="de">Deutsch</option>
+              <option value="el">ελληνικά</option>
+              <option value="en/en">English (England)</option>
+              <option value="en/en-n">English (Northern)</option>
+              <option value="en/en-rp">English (Received Pronunciation)</option>
+              <option value="en/en-sc">English (Scottish accent)</option>
+              <option value="en/en-us" selected>English (United States)</option>
+              <option value="en/en-wi">English (West Indies)</option>
+              <option value="en/en-wm">English (West Midlands)</option>
+              <option value="eo">Esperanto</option>
+              <option value="es">Español</option>
+              <option value="es-la">Español (América Latina)</option>
+              <option value="fi">suomi</option>
+              <option value="fr">Française (France)</option>
+              <option value="fr-be">Française (Belgique)</option>
+              <option value="hi">हिन्दी</option>
+              <option value="hu">magyar</option>
+              <option value="hy">Հայերեն</option>
+              <option value="hy-west">հայկական արևմուտք</option>
+              <option value="id">Bahasa Indonesia</option>
+              <option value="is">Íslenska</option>
+              <option value="it">Italiano</option>
+              <option value="ka">ქართული</option>
+              <option value="kn">ಕನ್ನಡ</option>
+              <option value="ku">کوردی</option>
+              <option value="la">latine</option>
+              <option value="lv">latviešu valoda</option>
+              <option value="mk">македонски јазик</option>
+              <option value="ml">മലയാളം</option>
+              <option value="nl">Nederlands</option>
+              <option value="no">Norsk</option>
+              <option value="pl">język polski</option>
+              <option value="pt">Português (Brasil)</option>
+              <option value="pt-pt">Português (Portugal)</option>
+              <option value="ro">Română</option>
+              <option value="ru">русский</option>
+              <option value="sk">Slovenčina</option>
+              <option value="sq">Shqip</option>
+              <option value="sv">Svenska</option>
+              <option value="sw">Kiswahili</option>
+              <option value="ta">தமிழ்</option>
+              <option value="tr">Türkçe</option>
+              <option value="vi">Tiếng Việt</option>
+              <option value="zh">漢語</option>
+              <option value="zh-yue">岳华</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button type="button" class="button" onclick="playAudio();">Play audio</button>
+        <button type="button" class="button" onclick="downloadWAV();">Download WAV</button>
+      </div>
     </form>
     <div id="audio"></div>
   </div>
