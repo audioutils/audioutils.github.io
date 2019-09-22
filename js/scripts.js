@@ -129,8 +129,6 @@ function playAudio() {
   generateAudioByInput(playAudioHTML5);
 }
 
-changeInput();
-
 document.getElementById('play-audio').addEventListener('click', function() {
   form.user_action.value = 'play-audio';
 });
@@ -142,8 +140,13 @@ document.getElementById('download-wav').addEventListener('click', function() {
 form.addEventListener('submit', function(event) {
   event.preventDefault();
   if (form.user_action.value == 'play-audio') {
+    displayModal(document.getElementById('play-audio-modal'));
     playAudio();
   } else if (form.user_action.value == 'download-wav') {
     downloadWAV();
   }
 });
+
+window.addEventListener('load', changeInput);
+document.getElementById('input-radio-text').addEventListener('change', changeInput);
+document.getElementById('input-radio-file').addEventListener('change', changeInput);
