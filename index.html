@@ -7,6 +7,7 @@
   <meta name="description" content="Convert text to audio files">
   <meta name="author" content="Aldo Puga">
   <link rel="stylesheet" href="css/bulma.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <section class="section">
@@ -131,15 +132,24 @@
             </div>
           </div>
           <div class="buttons">
-            <button type="submit" id="play-audio" class="button">Play audio</button>
+            <button type="submit" id="play-audio" class="button toggle-modal" data-target="play-audio-modal">Play audio</button>
             <button type="submit" id="download-wav" class="button">Download WAV</button>
           </div>
         </form>
-        <div id="audio"></div>
       </div>
     </div>
   </section>
+  <div class="modal" id="play-audio-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="box">
+        <div id="audio" class="has-text-centered"></div>
+      </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
   <script src="js/speak_client.js"></script>
+  <script src="js/bulma.js"></script>
   <script src="js/scripts.js"></script>
 </body>
 </html>
