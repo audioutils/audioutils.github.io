@@ -1,3 +1,5 @@
+var form = document.getElementById('form');
+
 function encode64(data) {
   var BASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
   var PAD = '=';
@@ -77,7 +79,6 @@ function playAudioHTML5(text, options) {
 }
 
 function generateAudio(text, callback) {
-  var form = document.getElementById('form');
   var amplitude = form.amplitude.value;
   var workdgap = form.workdgap.value;
   var pitch = form.pitch.value;
@@ -99,7 +100,6 @@ function loadTextContentFile(callback) {
 }
 
 function generateAudioByInput(callback) {
-  var form = document.getElementById('form');
   var inputType = form.input.value;
   if (inputType == 'text') {
     var text = form.text.value;
@@ -110,7 +110,6 @@ function generateAudioByInput(callback) {
 }
 
 function changeInput() {
-  var form = document.getElementById('form');
   var inputType = form.input.value;
   var isText = inputType == 'text';
   var isFile = inputType == 'file';
@@ -131,3 +130,20 @@ function playAudio() {
 }
 
 changeInput();
+
+document.getElementById('play-audio').addEventListener('click', function() {
+  form.user_action.value = 'play-audio';
+});
+
+document.getElementById('download-wav').addEventListener('click', function() {
+  form.user_action.value = 'download-wav';
+});
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  if (form.user_action.value == 'play-audio') {
+    playAudio();
+  } else if (form.user_action.value == 'download-wav') {
+    downloadWAV();
+  }
+});

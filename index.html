@@ -15,6 +15,7 @@
       <div>
         <h2 class="subtitle">Text to audio</h2>
         <form id="form">
+          <input type="hidden" name="user_action">
           <div class="field">
             <div class="field-label has-text-left">
               <label class="label">Input</label>
@@ -130,8 +131,8 @@
             </div>
           </div>
           <div class="buttons">
-            <button type="button" class="button" onclick="playAudio();">Play audio</button>
-            <button type="button" class="button" onclick="downloadWAV();">Download WAV</button>
+            <button type="submit" id="play-audio" class="button">Play audio</button>
+            <button type="submit" id="download-wav" class="button">Download WAV</button>
           </div>
         </form>
         <div id="audio"></div>
